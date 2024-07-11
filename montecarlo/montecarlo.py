@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-# Class 'Die'
+########## class 'Die' ##########
 class Die:
     '''
     TO DO: insert docstring here
@@ -65,35 +65,8 @@ class Die:
     def dataframe(self):
         return self.__df
 
-##########################
-# # checking work for CLASS DIE    
-# die = Die(np.array([1,2,3,4,5,6]))
-# die.faces
-# die.weights
 
-# die.chng_wght(4, 3)
-# die.weights
-# die.roll(10)
-# die.dataframe()
-
-# face = np.array([1,2,3,4,5,6])
-# face.dtype
-# face2 = np.array(['a', 'b', 'c', 'd'])
-# face2.dtype
-#########################
-
-#########################
-# SETUP for CLASS GAME
-# die1 = Die(np.array([1,2,3,4,5,6]))
-# die2 = Die(np.array([1,2,3,4,5,6]))
-
-# die1.chng_wght(3,4)
-# die2.chng_wght(4,3)
-
-# dice=[die1, die2]
-# type(dice)
-########################
-
+########## class 'Game' ##########
 class Game:
     '''
     TO DO: insert docstring
@@ -137,32 +110,7 @@ class Game:
             return self.__df2.stack()
 
 
-#############################
-# checking work for CLASS GAME
-# game = Game(dice)
-# game.play(4)
-# game.play_results()
-# game.play_results(form='narrow')
-#############################
-
-# set up for CLASS ANALYZE
-# dieA = Die(np.array([1,2,3,4,5,6]))
-# dieB = Die(np.array([1,2,3,4,5,6]))
-# dieC = Die(np.array([1,2,3,4,5,6]))
-
-# dieA.chng_wght(3,4)
-# dieB.chng_wght(4,3)
-# type(dieB.weights)
-
-# dice=[dieA, dieB, dieC]
-
-# game = Game(dice)
-# game.play(10)
-# gameplay_df = game.play_results()
-# gameplay_narrow = game.play_results(form='narrow')
-# gameplay_df.columns
-# type(gameplay_df)
-
+########## class 'Analyzer' ##########
 class Analyzer:
     '''
     TO DO: insert docstring
@@ -189,7 +137,7 @@ class Analyzer:
         elif i == 1: return ('1 Jackpot!')
         elif i > 1: return (f'{i} Jackpots!')
 
-    # method 2:
+    # method 2: count occurence of faces in each roll
     def face_count(self):
         # create zeros dataframe with index = rolls and columns = faces
         counts_df = pd.DataFrame(columns=self.faces_array, index=self.play_results.index).fillna(0)
@@ -204,7 +152,7 @@ class Analyzer:
         # return updated df
         return counts_df
 
-    # method 3:
+    # method 3: count combinations of rolls
     def combo_count(self):
         '''
         TO DO: insert docstring
@@ -218,21 +166,10 @@ class Analyzer:
         # rename column to combo_count
         return df3
         
-    # method 4:
+    # method 4: count permutations of rolls
     def perm_count(self):
         # essentially combo count but order matters --> just use value_count
-        # rename column to perm_counts
         perms = self.play_results.value_counts(ascending=True)
         perms.columns = 'perm_counts'
         return perms
 
-
-#########################################
-# check work for CLASS ANALYZER
-# Analyzer Tests
-# analyzed = Analyzer(game)
-# analyzed.jackpot()
-# analyzed.face_count()
-# analyzed.combo_count()
-# analyzed.perm_count()
-#########################################
