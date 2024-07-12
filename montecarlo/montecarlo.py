@@ -6,7 +6,7 @@ class Die:
     '''
     TO DO: insert docstring here
     '''
-    # init
+    # method 1: init Die
     def __init__(self, faces):
         '''
         TO DO: insert docstring here
@@ -33,7 +33,7 @@ class Die:
         self.__df = pd.DataFrame(self.weights, index=self.faces, columns=['weights'])
         self.__df.index.name = 'faces'
 
-    # method 1: change weights
+    # method 2: change weights
     def chng_wght(self, face_val, new_wght):
         '''
         TO DO: insert docstring here
@@ -57,7 +57,7 @@ class Die:
         # inform of change
         return(f"face value '{face_val}' has been given new weight '{new_wght}'")
 
-    # method 2: roll die one or more times
+    # method 3: roll die one or more times
     def roll_die(self, rolls=1):
         '''
         TO DO: insert docstring here
@@ -70,7 +70,7 @@ class Die:
         normalized = self.weights / self.weights.sum()
         return list(np.random.choice(self.faces, size=rolls, p=(normalized)))
 
-    # method 3: show die's current state: returns copy of private die dataframe
+    # method 4: show die's current state: returns copy of private die dataframe
     def dataframe(self):
         '''
         TO DO: insert docstring here
@@ -83,7 +83,7 @@ class Game:
     '''
     TO DO: insert docstring
     '''
-    # init
+    # method 5: init Game
     def __init__(self, dice):
         '''
         TO DO: insert docstring here
@@ -100,7 +100,7 @@ class Game:
         # assign variable
         self.dice = dice
 
-    # method 1: roll dice and save to private df
+    # method 6: roll dice and save to private df
     def play(self, rolls):
         '''
         TO DO: insert docstring here
@@ -118,7 +118,7 @@ class Game:
         for i, x in enumerate(self.dice, start = 1):
             self.__df2[f'die{i}'] = x.roll_die(rolls)
 
-    # method 2: results of .play
+    # method 7: results of .play
     def play_results(self, form = 'wide'):
         '''
         TO DO: insert docstring here
@@ -136,7 +136,7 @@ class Analyzer:
     '''
     TO DO: insert docstring
     '''
-    # init
+    # method 8: init Analyzer
     def __init__(self, game):
         '''
         TO DO: insert docstring here
@@ -148,7 +148,7 @@ class Analyzer:
         self.play_results = game.play_results()
         self.faces_array = game.dice[0].faces
 
-    # method 1: jackpot where all faces are the same
+    # method 9: jackpot where all faces are the same
     def jackpot(self):
         '''
         TO DO: insert docstring here
@@ -164,7 +164,7 @@ class Analyzer:
         elif i == 1: return ('1 Jackpot!')
         elif i > 1: return (f'{i} Jackpots!')
 
-    # method 2: count occurence of faces in each roll
+    # method 10: count occurence of faces in each roll
     def face_count(self):
         '''
         TO DO: insert docstring here
@@ -181,9 +181,9 @@ class Analyzer:
                 counts_df.at[index, face] += 1
 
         # return updated df
-        return counts_df
+        return counts_df.astype(int)
 
-    # method 3: count combinations of rolls
+    # method 11: count combinations of rolls
     def combo_count(self):
         '''
         TO DO: insert docstring
@@ -195,7 +195,7 @@ class Analyzer:
         df3 = df_sort.value_counts(ascending=True)
         return df3.to_frame(name='combo_counts')
         
-    # method 4: count permutations of rolls
+    # method 12: count permutations of rolls
     def perm_count(self):
         '''
         TO DO: insert docstring here
