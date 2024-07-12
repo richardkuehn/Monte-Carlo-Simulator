@@ -170,7 +170,8 @@ class Analyzer:
         TO DO: insert docstring here
         '''
         # create zeros dataframe with index = rolls and columns = faces
-        counts_df = pd.DataFrame(columns=self.faces_array, index=self.play_results.index).fillna(0)
+        counts_df = pd.DataFrame(columns=self.faces_array, index=self.play_results.index)
+        counts_df = counts_df.infer_objects().fillna(0)
         counts_df.columns.name = 'faces_counts'
 
         # iterate through rows in 'self.play_results'
