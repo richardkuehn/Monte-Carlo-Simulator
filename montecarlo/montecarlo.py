@@ -8,6 +8,9 @@ class Die:
     '''
     # init
     def __init__(self, faces):
+        '''
+        TO DO: insert docstring here
+        '''    
         # check if numpy array
         if not isinstance(faces, np.ndarray):
             raise TypeError("'faces' argument must be numpy array")
@@ -32,6 +35,9 @@ class Die:
 
     # method 1: change weights
     def chng_wght(self, face_val, new_wght):
+        '''
+        TO DO: insert docstring here
+        '''    
         # check for 'face_val' in __df
         if face_val not in self.__df.index:
             raise IndexError(f"'face_val' argument must be between {self.__df.index[0]} and {self.__df.index[-1]}")
@@ -53,16 +59,22 @@ class Die:
 
     # method 2: roll die one or more times
     def roll_die(self, rolls=1):
+        '''
+        TO DO: insert docstring here
+        '''    
         # check 'rolls' is int and greater than 1
         if not isinstance(rolls, int) or rolls < 1:
             raise ValueError("'rolls' must be an integer greater than 0")
         
         # return result of rolls
         normalized = self.weights / self.weights.sum()
-        return np.random.choice(self.faces, size=rolls, p=(normalized))
+        return list(np.random.choice(self.faces, size=rolls, p=(normalized)))
 
     # method 3: show die's current state: returns copy of private die dataframe
     def dataframe(self):
+        '''
+        TO DO: insert docstring here
+        '''    
         return self.__df
 
 
@@ -73,6 +85,9 @@ class Game:
     '''
     # init
     def __init__(self, dice):
+        '''
+        TO DO: insert docstring here
+        '''    
         # check if 'dice' is a list
         if not isinstance(dice, list):
             raise ValueError("'dice' must be a list")
@@ -87,6 +102,9 @@ class Game:
 
     # method 1: roll dice and save to private df
     def play(self, rolls):
+        '''
+        TO DO: insert docstring here
+        '''
         # check if integer
         if type(rolls) != int:
             raise ValueError("'rolls' must be an integer")
@@ -102,12 +120,15 @@ class Game:
 
     # method 2: results of .play
     def play_results(self, form = 'wide'):
+        '''
+        TO DO: insert docstring here
+        '''
         if form not in ('wide', 'narrow'):
             raise ValueError("'form' must equal 'wide' or 'narrow'")
         if (form == 'wide'):
             return self.__df2
         if (form == 'narrow'):
-            return self.__df2.stack()
+            return self.__df2.stack().to_frame(name='die value')
 
 
 ########## class 'Analyzer' ##########
@@ -117,6 +138,9 @@ class Analyzer:
     '''
     # init
     def __init__(self, game):
+        '''
+        TO DO: insert docstring here
+        '''
         # check that 'game' is Game object
         if not isinstance(game, Game):
             raise ValueError("'game' must be instance of the Game class")
@@ -126,6 +150,9 @@ class Analyzer:
 
     # method 1: jackpot where all faces are the same
     def jackpot(self):
+        '''
+        TO DO: insert docstring here
+        '''
         # add +1 to 'i' if only 1 unique value
         i = 0
         for col in self.play_results.columns:
@@ -139,6 +166,9 @@ class Analyzer:
 
     # method 2: count occurence of faces in each roll
     def face_count(self):
+        '''
+        TO DO: insert docstring here
+        '''
         # create zeros dataframe with index = rolls and columns = faces
         counts_df = pd.DataFrame(columns=self.faces_array, index=self.play_results.index).fillna(0)
         counts_df.columns.name = 'faces_counts'
@@ -162,14 +192,14 @@ class Analyzer:
         df_sort = pd.DataFrame(combo_sort)
         df_sort.columns = [f'die{i}' for i in range(1, (len(df_sort.columns) + 1))]
         df3 = df_sort.value_counts(ascending=True)
-        df3.columns = 'combo_counts'
-        # rename column to combo_count
-        return df3
+        return df3.to_frame(name='combo_counts')
         
     # method 4: count permutations of rolls
     def perm_count(self):
+        '''
+        TO DO: insert docstring here
+        '''
         # essentially combo count but order matters --> just use value_count
         perms = self.play_results.value_counts(ascending=True)
-        perms.columns = 'perm_counts'
-        return perms
+        return perms.to_frame(name='perm_counts')
 
