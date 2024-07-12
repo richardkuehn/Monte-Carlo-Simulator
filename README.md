@@ -1,20 +1,20 @@
 ## Monte Carlo Simulator
 
 
-#### Synopsis
+### Synopsis
 This application creates three related classes ('Die', 'Game', and 'Analyzer') to simulate processes that rely on repeated random sampling. Below are the steps to install, import, and use the code to create a simulation.
 
-##### Step 1: Install
+#### Step 1: Install
 ```sh
 pip install -e .
 ```
 
-##### Step 2: Import
+#### Step 2: Import
 ```python
 from montecarlo import Die, Game, Analyzer
 ```
 
-##### Step 3: Create Die
+#### Step 3: Create Die
 i. create 'Die' object with numpy array
 ```python
 dieA = Die(np.array([1,2,3,4,5,6]))
@@ -45,7 +45,7 @@ vi. use method 'dataframe' to see a dataframe consisting of faces and weights
 dieA.dataframe()
 ```
 
-##### Step 4: Create Game
+#### Step 4: Create Game
 i. create list 'dice' with 'Die' objects
 ```python
 dieA = Die(np.array([1,2,3,4,5,6]))
@@ -69,7 +69,7 @@ iv. use method 'play_results' and specify form as 'narrow' to see narrow datafra
 game.play_results(form='narrow')
 ```
 
-##### Step 5: Create Analyzer
+#### Step 5: Create Analyzer
 i. create 'Die' objects and 'Game' object
 ```python
 dieA = Die(np.array([1,2,3,4,5,6]))
@@ -100,14 +100,120 @@ v. use method 'perm_count' to see the permuation counts (order dependent)
 analyzed.perm_count()
 ```
 
-#### API Description
-***Die***
+### API Description
+#### Class: ***Die***
+*A class to represent a die.*
+
+##### Attributes 
+- faces : np.ndarray
+    - faces of die
+- weights : np.ndarray
+    - weights for the faces all set to 1
+
+##### Methods
+- __init__(faces) : Constructs attributes for the Die object
+    - Parameters
+        - faces : np.ndarray
+            - faces of die
+    - Returns
+        - None
+
+- chng_wght(face_val, new_wght) : Changes weight of specified die face
+    - Parameters
+        - face_val : int, str
+            - value of face to change
+        - new_wght : int, float, castable str
+            - new weight to change face to
+    - Returns
+        - face value '{face_val}' has been given new weight '{new_wght}'
+
+- roll_die(rolls=1) : Roll die to produce values based on random sampling
+    - Parameters
+        - rolls : int
+            - number of samples, defaults to 1
+    - Returns
+        - list with length 'rolls' consisting of face values from random sampling
+
+- dataframe( ) : Returns dataframe consisting of faces and weights 
+    - Parameters
+        - None
+    - Returns
+        - dataframe consisting of faces and weights
 
 
-***Game***
+#### Class: ***Game***
+*A class to represent a game using 'Die' objects.*
 
-***Analyzer***
+##### Attributes 
+- dice : list
+    - list of 'Die' objects
+
+##### Methods
+- __init__(dice) : Constructs attributes for the 'Game' object
+    - Parameters
+        - dice : list
+            - list of 'Die' objects
+    - Returns
+        - None
+
+- play(rolls) : Rolls list of 'Die' objects specified times
+    - Parameters
+        - rolls : int
+            - number of samples
+    - Returns
+        - None
+
+- play_results(form = 'wide') : Returns dataframe with results of play() in wide or narrow format
+    - Parameters
+        - form : str
+            - defaults to 'wide', but accepts 'narrow' to stack dataframe- 
+    - Returns
+        - if form is wide, wide dataframe of play results
+        - if form is narrow, narrow dataframe of play results
 
 
-#### About
+#### Class: ***Analyzer***
+*A class to represent analysis using a 'Game' object.*
+
+##### Attributes 
+- play_results : pd.DataFrame
+    - dataframe of object's Game.play_results()
+- face_array : np.ndarray
+    - array of faces from first die of object's Game.dice()
+
+##### Methods
+- __init__(game): Constructs attributes for the 'Analyzer' object
+    - Parameters
+        - game : 'Game' object
+            - 'Game' object
+    - Returns
+        - None
+
+- jackpot( ): Returns statement with jackpot counts
+    - Parameters
+        - None
+    - Returns
+        - if jackpot count is 0: '0 Jackpots :('
+        - if jackpot count is 1: '1 Jackpot!'
+        - if jackpot count is greater than 1: '{i} Jackpots!'
+
+- face_count( ): Returns dataframe with face counts
+    - Parameters
+        - None
+    - Returns
+        - dataframe consisting of value counts for faces in each round of rolls
+
+- combo_count( ): Returns dataframe with combination counts
+    - Parameters
+        - None
+    - Returns
+        - dataframe consisting of the count of face combinations (independent of order)
+
+- perm_count( ): Returns dataframe with permutation counts
+    - Parameters
+        - None
+    - Returns
+        - dataframe consisting of the count of face permutations (dependent of order)
+
+### About
 Created by Richard 'Ricky' Kuehn from the University of Virginia. To contact, please email *fmt2tg@virginia.edu*

@@ -4,12 +4,38 @@ import pandas as pd
 ########## class 'Die' ##########
 class Die:
     '''
-    TO DO: insert docstring here
+    A class to represent a die.
+
+    ...
+    Attributes
+    ---------------
+    faces : np.ndarray
+        faces of die
+    weights : np.ndarray
+        weights for the faces all set to 1
+
+    Methods
+    ----------
+    chng_wght(face_val, new_wght):
+        Changes weight of specified die face
+    roll_die(rolls=1):
+        Rolls die to produce values based on random sampling
+    dataframe():
+        Returns dataframe consisting of faces and weights
     '''
     # method 1: init Die
     def __init__(self, faces):
         '''
-        TO DO: insert docstring here
+        Constructs attributes for the 'Die' object
+
+        Parameters
+        ---------------
+        faces : np.ndarray
+            faces of die
+
+        Returns
+        ---------------
+        None
         '''    
         # check if numpy array
         if not isinstance(faces, np.ndarray):
@@ -36,7 +62,18 @@ class Die:
     # method 2: change weights
     def chng_wght(self, face_val, new_wght):
         '''
-        TO DO: insert docstring here
+        Changes weight of specified die face
+
+        Parameters
+        ---------------
+        face_val : int, str
+            value of face to change
+        new_wght : int, float, castable str
+            new weight to change face to
+        
+        Returns
+        ---------------
+        face value '{face_val}' has been given new weight '{new_wght}'
         '''    
         # check for 'face_val' in __df
         if face_val not in self.__df.index:
@@ -60,7 +97,16 @@ class Die:
     # method 3: roll die one or more times
     def roll_die(self, rolls=1):
         '''
-        TO DO: insert docstring here
+        Roll die to produce values based on random sampling
+
+        Parameters
+        ---------------
+        rolls : int
+            number of samples, defaults to 1
+
+        Returns
+        ---------------
+        list with length 'rolls' consisting of face values from random sampling
         '''    
         # check 'rolls' is int and greater than 1
         if not isinstance(rolls, int) or rolls < 1:
@@ -73,7 +119,15 @@ class Die:
     # method 4: show die's current state: returns copy of private die dataframe
     def dataframe(self):
         '''
-        TO DO: insert docstring here
+        Returns dataframe consisting of faces and weights 
+
+        Parameters
+        ---------------
+        None
+
+        Returns
+        ---------------
+        dataframe consisting of faces and weights
         '''    
         return self.__df
 
@@ -81,12 +135,34 @@ class Die:
 ########## class 'Game' ##########
 class Game:
     '''
-    TO DO: insert docstring
+    A class to represent a game using 'Die' objects.
+
+    ...
+    Attributes
+    ---------------
+    dice : list
+        list of 'Die' objects
+
+    Methods
+    ---------------
+    play(rolls):
+        Rolls list of 'Die' objects specified times
+    play_results(form='wide'):
+        Returns dataframe with results of play() in wide or narrow format
     '''
     # method 5: init Game
     def __init__(self, dice):
         '''
-        TO DO: insert docstring here
+        Constructs attributes for the 'Game' object
+
+        Parameters
+        --------------- 
+        dice : list
+            - list of 'Die' objects
+
+        Returns
+        ---------------
+        None
         '''    
         # check if 'dice' is a list
         if not isinstance(dice, list):
@@ -103,7 +179,16 @@ class Game:
     # method 6: roll dice and save to private df
     def play(self, rolls):
         '''
-        TO DO: insert docstring here
+        Rolls list of 'Die' objects specified times
+
+        Parameters
+        --------------- 
+        rolls : int
+            number of samples
+
+        Returns
+        ---------------
+        None
         '''
         # check if integer
         if type(rolls) != int:
@@ -121,7 +206,17 @@ class Game:
     # method 7: results of .play
     def play_results(self, form = 'wide'):
         '''
-        TO DO: insert docstring here
+        Returns dataframe with results of play() in wide or narrow format
+
+        Parameters
+        ---------------
+        form : str
+            defaults to 'wide', but accepts 'narrow' to stack dataframe
+
+        Returns
+        ---------------
+        - if form is wide, wide dataframe of play results
+        - if form is narrow, narrow dataframe of play results
         '''
         if form not in ('wide', 'narrow'):
             raise ValueError("'form' must equal 'wide' or 'narrow'")
@@ -134,12 +229,40 @@ class Game:
 ########## class 'Analyzer' ##########
 class Analyzer:
     '''
-    TO DO: insert docstring
+    A class to represent analysis using a 'Game' object.
+
+    ...
+    Attributes
+    ---------------
+    play_results : pd.DataFrame
+        dataframe of object's Game.play_results()
+    face_array : np.ndarray
+        array of faces from first die of object's Game.dice()
+
+    Methods
+    ---------------
+    jackpot():
+        Returns statement with jackpot counts
+    face_count():
+        Returns dataframe with face counts
+    combo_count():
+        Returns dataframe with combination counts
+    perm_count():
+        Returns dataframe with permutation counts
     '''
     # method 8: init Analyzer
     def __init__(self, game):
         '''
-        TO DO: insert docstring here
+        Constructs attributes for the 'Analyzer' object
+
+        Parameters
+        --------------- 
+        game : 'Game' object
+            'Game' object
+
+        Returns
+        ---------------
+        None
         '''
         # check that 'game' is Game object
         if not isinstance(game, Game):
@@ -151,7 +274,17 @@ class Analyzer:
     # method 9: jackpot where all faces are the same
     def jackpot(self):
         '''
-        TO DO: insert docstring here
+        Returns statement with jackpot counts
+
+        Parameters
+        --------------- 
+        None
+
+        Returns
+        ---------------
+        if jackpot count is 0: '0 Jackpots :('
+        if jackpot count is 1: '1 Jackpot!'
+        if jackpot count is greater than 1: '{i} Jackpots!'
         '''
         # add +1 to 'i' if only 1 unique value
         i = 0
@@ -167,7 +300,15 @@ class Analyzer:
     # method 10: count occurence of faces in each roll
     def face_count(self):
         '''
-        TO DO: insert docstring here
+        Returns dataframe with face counts
+
+        Parameters
+        --------------- 
+        None
+
+        Returns
+        ---------------
+        dataframe consisting of value counts for faces in each round of rolls
         '''
         # create zeros dataframe with index = rolls and columns = faces
         counts_df = pd.DataFrame(columns=self.faces_array, index=self.play_results.index)
@@ -186,7 +327,15 @@ class Analyzer:
     # method 11: count combinations of rolls
     def combo_count(self):
         '''
-        TO DO: insert docstring
+        Returns dataframe with combination counts
+
+        Parameters
+        --------------- 
+        None
+
+        Returns
+        ---------------
+        dataframe consisting of the count of face combinations (independent of order)
         '''
         combos = [self.play_results.iloc[x].values.tolist() for x in range(0, len(self.play_results))]
         combo_sort = [sorted(x) for x in combos]
@@ -198,7 +347,15 @@ class Analyzer:
     # method 12: count permutations of rolls
     def perm_count(self):
         '''
-        TO DO: insert docstring here
+        Returns dataframe with permutation counts
+
+        Parameters
+        --------------- 
+        None
+
+        Returns
+        ---------------
+        dataframe consisting of the count of face permutations (dependent of order)
         '''
         # essentially combo count but order matters --> just use value_count
         perms = self.play_results.value_counts(ascending=True)
