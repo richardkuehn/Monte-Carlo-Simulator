@@ -168,8 +168,8 @@ analyzed.perm_count()
         - form : str
             - defaults to 'wide', but accepts 'narrow' to stack dataframe- 
     - Returns
-        - if form is wide, wide dataframe of play results
-        - if form is narrow, narrow dataframe of play results
+        - if form is 'wide', wide dataframe of play_results
+        - if form is 'narrow', narrow dataframe of play_results
 
 
 #### Class: ***Analyzer***
