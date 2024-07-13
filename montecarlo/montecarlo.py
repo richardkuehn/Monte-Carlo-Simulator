@@ -42,7 +42,7 @@ class Die:
             raise TypeError("'faces' argument must be numpy array")
         
         # check if integers or strings
-        if faces.dtype not in (np.int32, np.int64, np.dtype('U')):
+        if faces.dtype not in (np.int32, np.int64) and faces.dtype.kind != 'U':
             raise TypeError("'faces' argument must contain integers or strings")
         
         # check if unique values
@@ -242,7 +242,7 @@ class Analyzer:
     Methods
     ---------------
     jackpot():
-        Returns statement with jackpot counts
+        Returns jackpot counts
     face_count():
         Returns dataframe with face counts
     combo_count():
@@ -274,7 +274,7 @@ class Analyzer:
     # method 9: jackpot where all faces are the same
     def jackpot(self):
         '''
-        Returns statement with jackpot counts
+        Returns jackpot counts
 
         Parameters
         --------------- 
@@ -282,20 +282,16 @@ class Analyzer:
 
         Returns
         ---------------
-        if jackpot count is 0: '0 Jackpots :('
-        if jackpot count is 1: '1 Jackpot!'
-        if jackpot count is greater than 1: '{i} Jackpots!'
+        count of Jackpots
         '''
         # add +1 to 'i' if only 1 unique value
         i = 0
-        for col in self.play_results.columns:
-            if self.play_results[col].nunique() == 1:
+        for x, row in self.play_results.iterrows():
+            if row.nunique() == 1:
                 i += 1
 
         # return count of 
-        if i == 0: return (f'0 Jackpots :(')
-        elif i == 1: return ('1 Jackpot!')
-        elif i > 1: return (f'{i} Jackpots!')
+        return i
 
     # method 10: count occurence of faces in each roll
     def face_count(self):
@@ -360,4 +356,3 @@ class Analyzer:
         # essentially combo count but order matters --> just use value_count
         perms = self.play_results.value_counts(ascending=True)
         return perms.to_frame(name='perm_counts')
-

@@ -189,13 +189,11 @@ analyzed.perm_count()
     - Returns
         - None
 
-- jackpot( ): Returns statement with jackpot counts
+- jackpot( ): Returns jackpot counts
     - Parameters
         - None
     - Returns
-        - if jackpot count is 0: '0 Jackpots :('
-        - if jackpot count is 1: '1 Jackpot!'
-        - if jackpot count is greater than 1: '{i} Jackpots!'
+        - count of Jackpots
 
 - face_count( ): Returns dataframe with face counts
     - Parameters

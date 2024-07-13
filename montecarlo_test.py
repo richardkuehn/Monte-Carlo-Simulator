@@ -3,10 +3,12 @@ import numpy as np
 import pandas as pd
 from montecarlo import Die, Game, Analyzer
 
+########## TEST ##########
 class MonteCarloTestSuite(unittest.TestCase):
     def test_01_die_init(self):
         # create instance
         dieA = Die(np.array([1,2,3,4,5,6]))
+        
         message = "'weights' should be instance of np.ndarray"
         self.assertIsInstance(dieA.weights, np.ndarray, message)
     
@@ -99,8 +101,8 @@ class MonteCarloTestSuite(unittest.TestCase):
         game.play(10)
         analyzed = Analyzer(game)
 
-        message = "method should return a string"
-        self.assertIsInstance(analyzed.jackpot(), str, message)
+        message = "method should return an int"
+        self.assertIsInstance(analyzed.jackpot(), int, message)
     
     def test_10_face_count(self):
         # create instances
@@ -144,8 +146,6 @@ class MonteCarloTestSuite(unittest.TestCase):
         message = "method should return a pd.DataFrame"
         self.assertIsInstance(analyzed.perm_count(), pd.DataFrame, message)
 
-
-
-
+########## Run TEST ##########
 if __name__ == '__main__':
     unittest.main(verbosity=3)
